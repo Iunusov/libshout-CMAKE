@@ -235,10 +235,11 @@ int               httpp_encoding_release(httpp_encoding_t *self)
 /* Read data from backend.
  * if cb is NULL this will read from the internal buffer.
  */
-ssize_t           httpp_encoding_read(httpp_encoding_t *self, void *buf, size_t len, ssize_t (*cb)(void*, void*, size_t), void *userdata)
+ssize_t           httpp_encoding_read(httpp_encoding_t *self, void *buf_, size_t len, ssize_t (*cb)(void*, void*, size_t), void *userdata)
 {
     ssize_t done = 0;
     ssize_t ret;
+	char *buf = buf_;
 
     if (!self || !buf)
         return -1;
@@ -253,7 +254,7 @@ ssize_t           httpp_encoding_read(httpp_encoding_t *self, void *buf, size_t 
 
     if (ret > 0) {
         done += ret;
-        (char*)buf  += ret;
+        buf  += ret;
         len  -= ret;
     }
 
@@ -264,14 +265,14 @@ ssize_t           httpp_encoding_read(httpp_encoding_t *self, void *buf, size_t 
         return -1;
 
     done += ret;
-	(char*)buf  += ret;
+	buf  += ret;
     len  -= ret;
 
     if (len) {
         ret = __copy_buffer(buf, &(self->buf_read_decoded), &(self->buf_read_decoded_offset), &(self->buf_read_decoded_len), len);
         if (ret > 0) {
             done += ret;
-			(char*)buf  += ret;
+			buf  += ret;
             len  -= ret;
         }
     }
