@@ -45,6 +45,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/common)
 
 if(WIN32)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/win32compat)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/win32compat/shout)
 endif()
 
 add_library(${PROJECT_NAME} STATIC ${SOURCE_LIB})
@@ -52,6 +53,12 @@ add_library(${PROJECT_NAME} STATIC ${SOURCE_LIB})
 target_include_directories(${PROJECT_NAME} 
 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+
+if(WIN32)
+target_include_directories(${PROJECT_NAME} 
+PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/win32compat/shout
+)
+endif()
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} libvorbis)
 
