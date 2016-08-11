@@ -226,6 +226,22 @@ if(WITH_VORBIS)
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} libvorbis)
 endif()
 
+if(WITH_OGG)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} libogg)
+endif()
+
+if(WITH_SPEEX)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} libspeex)
+endif()
+
+if(WITH_THEORA)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} libtheora)
+endif()
+
+if(WITH_OPENSSL)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} libssl)
+endif()
+
 if(WIN32)
   target_link_libraries(${PROJECT_NAME} wsock32 ws2_32)
 endif()
