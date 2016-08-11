@@ -27,7 +27,7 @@ endif()
 
 INCLUDE (CheckIncludeFiles)
 INCLUDE (CheckFunctionExists)
-
+INCLUDE (CheckIncludeFile)
 
 CHECK_FUNCTION_EXISTS(endhostent HAVE_ENDHOSTENT)
 if(HAVE_ENDHOSTENT) 
