@@ -174,7 +174,9 @@ add_definitions (-DLIBSHOUT_MICRO=1)
 add_definitions (-DHAVE_GETTIMEOFDAY=1)
 add_definitions (-DTIME_WITH_SYS_TIME)
 
-
+if(HAVE_PTHREAD)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src/common/thread SOURCE_LIB)
+endif()
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src/common/net SOURCE_LIB)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src/common/httpp SOURCE_LIB)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src/common/avl SOURCE_LIB)
