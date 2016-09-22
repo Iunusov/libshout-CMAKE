@@ -8,6 +8,22 @@ option(WITH_THEORA "WITH_THEORA" OFF)
 option(WITH_OGG "WITH_OGG" OFF)
 option(WITH_VORBIS "WITH_VORBIS" OFF)
 
+# Inspired from /usr/share/autoconf/autoconf/c.m4
+FOREACH(KEYWORD "inline" "__inline__" "__inline")
+   IF(NOT DEFINED C_INLINE)
+     TRY_COMPILE(C_HAS_${KEYWORD} "${CMAKE_CURRENT_SOURCE_DIR}"
+       "${CMAKE_CURRENT_SOURCE_DIR}/test_inline.c"
+       COMPILE_DEFINITIONS "-Dinline=${KEYWORD}")
+     IF(C_HAS_${KEYWORD})
+       SET(C_INLINE TRUE)
+       ADD_DEFINITIONS("-Dinline=${KEYWORD}")
+     ENDIF(C_HAS_${KEYWORD})
+   ENDIF(NOT DEFINED C_INLINE)
+ENDFOREACH(KEYWORD)
+IF(NOT DEFINED C_INLINE)
+   ADD_DEFINITIONS("-Dinline=")
+ENDIF(NOT DEFINED C_INLINE)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/common)
