@@ -7,6 +7,7 @@ option(WITH_OPENSSL "WITH_OPENSSL" OFF)
 option(WITH_THEORA "WITH_THEORA" OFF)
 option(WITH_OGG "WITH_OGG" OFF)
 option(WITH_VORBIS "WITH_VORBIS" OFF)
+option(WITHOUT_PTHREAD "WITHOUT_PTHREAD" OFF)
 
 # Inspired from /usr/share/autoconf/autoconf/c.m4
 FOREACH(KEYWORD "inline" "__inline__" "__inline")
@@ -102,8 +103,12 @@ add_definitions(-DHAVE_NANOSLEEP)
 endif()
 
 CHECK_INCLUDE_FILE(pthread.h HAVE_PTHREAD)
-if(HAVE_PTHREAD) 
+if(HAVE_PTHREAD)
 add_definitions(-DHAVE_PTHREAD)
+endif()
+
+if(WITHOUT_PTHREAD)
+set(HAVE_PTHREAD NO)
 endif()
 
 if(NOT HAVE_PTHREAD)
@@ -111,7 +116,7 @@ add_definitions (-DNO_THREAD)
 endif()
 
 CHECK_FUNCTION_EXISTS(pthread_spin_lock HAVE_PTHREAD_SPIN_LOCK)
-if(HAVE_PTHREAD_SPIN_LOCK) 
+if(HAVE_PTHREAD_SPIN_LOCK)
 add_definitions(-DHAVE_PTHREAD_SPIN_LOCK)
 endif()
 
@@ -228,7 +233,7 @@ endif()
 
 
 
-add_library(${PROJECT_NAME} STATIC ${SOURCE_LIB})
+add_library(${PROJECT_NAME} ${SOURCE_LIB})
 
 target_include_directories(${PROJECT_NAME} 
 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
